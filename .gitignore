@@ -1,0 +1,41 @@
+# Gradle
+.gradle/
+build/
+!gradle/wrapper/gradle-wrapper.jar
+
+# Kotlin
+.kotlin/
+
+# IntelliJ IDEA
+.idea/
+*.iml
+*.ipr
+*.iws
+out/
+
+# Eclipse
+.classpath
+.project
+.settings/
+
+# VS Code / Fleet
+.vscode/
+.fleet/
+
+# Logs and crash dumps
+*.log
+logs/
+hs_err_pid*
+replay_pid*
+*.hprof
+
+# Local environment / secrets
+.env
+.env.*
+
+# Local shortcut overrides (the bundled sample in src/main/resources is tracked)
+/shortcuts.toml
+
+# OS metadata
+.DS_Store
+Thumbs.db

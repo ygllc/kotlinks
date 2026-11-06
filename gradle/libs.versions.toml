@@ -1,0 +1,18 @@
+[versions]
+kotlin = "2.4.20"
+logback = "1.6.3"
+akuleshov7-ktoml = "0.7.1"
+ktor-server-routing = "3.6.1"
+ktor-server-netty = "3.6.1"
+ktor-server-core = "3.6.1"
+
+[libraries]
+logback-classic = { module = "ch.qos.logback:logback-classic", version.ref = "logback" }
+akuleshov7-ktoml-core = { group = "com.akuleshov7", name = "ktoml-core", version.ref = "akuleshov7-ktoml" }
+ktor-server-routing = { group = "io.ktor", name = "ktor-server-routing", version.ref = "ktor-server-routing"}
+ktor-server-netty = { group = "io.ktor", name = "ktor-server-netty", version.ref = "ktor-server-netty"}
+ktor-server-core = { group = "io.ktor", name = "ktor-server-core", version.ref = "ktor-server-core"}
+
+[plugins]
+kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }

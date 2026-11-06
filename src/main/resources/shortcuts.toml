@@ -1,0 +1,21 @@
+[Links]
+[Links.MyMileage]
+"mymileage/github" = { link = "https://github.com/ygllc/MyMileage", key = "key.mymileage/github" }
+"mymileage/jira" = { link = "https://ygllc.atlassian.net/jira/software/projects/MILEAGE/summary", key = "key.mymileage/jira" }
+"mymileage/play-console" = { link = "https://play.google.com/console/u/0/developers/5048134708936002007/app/4974166028938187254/app-dashboard", key = "key.mymileage/play-console" }
+
+[Links.FetalKick]
+"fetalkick/github" = { link = "https://github.com/ygllc/FetalKick", key = "key.fetalkick/github" }
+
+[Links.Internal]
+"secret" = { link = "https://internal.company.com/secret", password = "demo123" }
+"legacy" = { link = "https://old.company.com", status = 301 }
+
+[Keys]
+[Keys.MyMileage]
+"key.mymileage/github" = "mm/gh"
+"key.mymileage/jira" = "mm/j"
+"key.mymileage/play-console" = "mm/play"
+
+[Keys.FetalKick]
+"key.fetalkick/github" = "fk/gh"

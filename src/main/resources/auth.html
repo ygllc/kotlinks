@@ -1,0 +1,272 @@
+<!-- 
+   Copyright (C) 2026 YG LLC
+   
+   This program is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
+   
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
+   
+   You should have received a copy of the GNU General Public License
+   along with this program.  If not, see <https://gnu.org>.
+ -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Password Required - Kotlinks</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Google+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=Google+Sans+Text:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0..1,0" rel="stylesheet">
+  <script type="importmap">
+  {
+    "imports": {
+      "lit": "https://cdn.jsdelivr.net/npm/lit@3.3.0/+esm",
+      "@m3e/web/theme": "https://cdn.jsdelivr.net/npm/@m3e/web@2.0.2/dist/theme.js",
+      "@m3e/web/form-field": "https://cdn.jsdelivr.net/npm/@m3e/web@2.0.2/dist/form-field.js",
+      "@m3e/web/autocomplete": "https://cdn.jsdelivr.net/npm/@m3e/web@2.0.2/dist/autocomplete.js",
+      "@m3e/web/option": "https://cdn.jsdelivr.net/npm/@m3e/web@2.0.2/dist/option.js",
+      "@m3e/web/card": "https://cdn.jsdelivr.net/npm/@m3e/web@2.0.2/dist/card.js",
+      "@m3e/web/button": "https://cdn.jsdelivr.net/npm/@m3e/web@2.0.2/dist/button.js",
+      "@m3e/web/icon": "https://cdn.jsdelivr.net/npm/@m3e/web@2.0.2/dist/icon.js",
+      "@m3e/web/core": "https://cdn.jsdelivr.net/npm/@m3e/web@2.0.2/dist/core.js",
+      "@m3e/web/core/a11y": "https://cdn.jsdelivr.net/npm/@m3e/web@2.0.2/dist/core-a11y.js",
+      "@m3e/web/core/anchoring": "https://cdn.jsdelivr.net/npm/@m3e/web@2.0.2/dist/core-anchoring.js",
+      "@m3e/web/core/bidi": "https://cdn.jsdelivr.net/npm/@m3e/web@2.0.2/dist/core-bidi.js",
+      "@m3e/web/core/layout": "https://cdn.jsdelivr.net/npm/@m3e/web@2.0.2/dist/core-layout.js",
+      "@m3e/web/core/platform": "https://cdn.jsdelivr.net/npm/@m3e/web@2.0.2/dist/core-platform.js",
+      "@m3e/core": "https://cdn.jsdelivr.net/npm/@m3e/web@2.0.2/dist/core.js"
+    }
+  }
+  </script>
+  <script type="module">
+    import "@m3e/web/theme";
+    import "@m3e/web/form-field";
+    import "@m3e/web/autocomplete";
+    import "@m3e/web/option";
+    import "@m3e/web/card";
+    import "@m3e/web/button";
+    import "@m3e/web/icon";
+  </script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --m3e-theme-primary: #6750A4;
+      --m3e-theme-on-primary: #FFFFFF;
+      --m3e-theme-primary-container: #EADDFF;
+      --m3e-theme-on-primary-container: #21005D;
+      --m3e-theme-surface: #FEF7FF;
+      --m3e-theme-on-surface: #1D1B20;
+      --m3e-theme-surface-variant: #E7E0EC;
+      --m3e-theme-on-surface-variant: #49454F;
+      --m3e-theme-outline: #79747E;
+      --m3e-theme-error: #BA1A1A;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --m3e-theme-primary: #D0BCFF;
+        --m3e-theme-on-primary: #381E72;
+        --m3e-theme-primary-container: #4F378B;
+        --m3e-theme-on-primary-container: #EADDFF;
+        --m3e-theme-surface: #141218;
+        --m3e-theme-on-surface: #E6E0E9;
+        --m3e-theme-surface-variant: #49454F;
+        --m3e-theme-on-surface-variant: #CAC4D0;
+        --m3e-theme-outline: #938F99;
+        --m3e-theme-error: #FFB4AB;
+      }
+    }
+
+    body {
+      font-family: 'Google Sans Text', 'Google Sans', system-ui, -apple-system, sans-serif;
+      background: linear-gradient(135deg, 
+        var(--m3e-theme-surface) 0%, 
+        var(--m3e-theme-surface-variant) 50%, 
+        var(--m3e-theme-primary-container) 100%);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      color: var(--m3e-theme-on-surface);
+    }
+
+    .container {
+      width: 100%;
+      max-width: 400px;
+      text-align: center;
+    }
+
+    .icon {
+      font-size: clamp(48px, 12vw, 72px);
+      margin-bottom: 16px;
+    }
+
+    .title {
+      font-size: 24px;
+      font-weight: 500;
+      margin-bottom: 8px;
+    }
+
+    .description {
+      font-size: 14px;
+      color: var(--m3e-theme-on-surface-variant);
+      margin-bottom: 24px;
+    }
+
+    .shortcut-path {
+      font-family: 'Google Sans', monospace;
+      font-size: 16px;
+      color: var(--m3e-theme-primary);
+      background: var(--m3e-theme-primary-container);
+      padding: 8px 16px;
+      border-radius: 20px;
+      display: inline-block;
+      margin-bottom: 24px;
+    }
+
+    m3e-card {
+      width: 100%;
+      --m3e-card-container-shape: 16px;
+    }
+
+    .input-wrapper {
+      position: relative;
+      margin-bottom: 16px;
+    }
+
+    .input-wrapper input {
+      width: 100%;
+      padding: 16px;
+      font-size: 16px;
+      font-family: inherit;
+      border: 1px solid var(--m3e-theme-outline);
+      border-radius: 4px;
+      background: var(--m3e-theme-surface);
+      color: var(--m3e-theme-on-surface);
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .input-wrapper input:focus {
+      border-color: var(--m3e-theme-primary);
+      box-shadow: 0 0 0 2px var(--m3e-theme-primary-container);
+    }
+
+    .input-wrapper label {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 16px;
+      color: var(--m3e-theme-on-surface-variant);
+      pointer-events: none;
+      transition: 0.2s;
+      background: var(--m3e-theme-surface);
+      padding: 0 4px;
+    }
+
+    .input-wrapper input:focus + label,
+    .input-wrapper input:not(:placeholder-shown) + label {
+      top: 0;
+      font-size: 12px;
+      color: var(--m3e-theme-primary);
+    }
+
+    m3e-button {
+      width: 100%;
+      --m3e-button-container-shape: 20px;
+    }
+
+    .error-message {
+      color: var(--m3e-theme-error);
+      font-size: 14px;
+      margin-bottom: 16px;
+    }
+
+    .footer {
+      margin-top: 24px;
+    }
+
+    m3e-button[variant="text"] {
+      --m3e-button-container-shape: 20px;
+    }
+  </style>
+</head>
+<body>
+  <m3e-theme>
+  
+  <div class="container">
+    <div class="icon">🔒</div>
+    <h1 class="title">Password Required</h1>
+    <p class="description">This shortcut is protected</p>
+    <span class="shortcut-path">go/{{PATH}}</span>
+
+    <m3e-card>
+      <form method="POST" action="/auth/{{PATH}}" id="auth-form">
+        <div style="padding: 20px;">
+          <div class="error-message" id="error-msg" style="display: none;"></div>
+          <div class="input-wrapper">
+            <input 
+              type="password" 
+              id="password"
+              name="password" 
+              placeholder=" "
+              autocomplete="current-password"
+            >
+            <label for="password">Password</label>
+          </div>
+          <m3e-button variant="filled" type="submit" id="submit-btn">
+            <m3e-icon slot="icon" name="arrow_forward"></m3e-icon>
+            Continue
+          </m3e-button>
+        </div>
+      </form>
+    </m3e-card>
+
+    <div class="footer">
+      <m3e-button variant="text" id="go-home">
+        <m3e-icon slot="icon" name="home"></m3e-icon>
+        Go Home
+      </m3e-button>
+    </div>
+  </div>
+
+  </m3e-theme>
+
+  <script>
+    document.getElementById('go-home').addEventListener('click', () => {
+      window.location.href = '/';
+    });
+
+    const errorMsg = document.getElementById('error-msg');
+    const errorText = '{{ERROR}}';
+    if (errorText) {
+      errorMsg.textContent = errorText;
+      errorMsg.style.display = 'block';
+    }
+
+    document.getElementById('auth-form').addEventListener('submit', () => {
+      document.getElementById('submit-btn').loading = true;
+    });
+
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/sw.js').catch(() => {});
+    }
+  </script>
+</body>
+</html>

@@ -241,4 +241,4 @@ Both projects share the same `shortcuts.toml` format and HTTP behavior, so you c
 
 ## License
 
-No license file is included in this repository yet. Add one before distributing the project.
+GPL 3

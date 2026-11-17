@@ -12,7 +12,9 @@ akuleshov7-ktoml-core = { group = "com.akuleshov7", name = "ktoml-core", version
 ktor-server-routing = { group = "io.ktor", name = "ktor-server-routing", version.ref = "ktor-server-routing"}
 ktor-server-netty = { group = "io.ktor", name = "ktor-server-netty", version.ref = "ktor-server-netty"}
 ktor-server-core = { group = "io.ktor", name = "ktor-server-core", version.ref = "ktor-server-core"}
+ktor-server-html-builder = { group = "io.ktor", name = "ktor-server-html-builder", version.ref = "ktor-server-core"}
 
 [plugins]
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
+kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }

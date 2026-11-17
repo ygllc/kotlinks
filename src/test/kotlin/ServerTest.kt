@@ -98,6 +98,21 @@ class ServerTest {
     }
 
     @Test
+    fun `static stylesheets and scripts are served`() = testApplication {
+        configure()
+
+        val css = client.get("/static/theme.css")
+        assertEquals(HttpStatusCode.OK, css.status)
+        assertContains(css.headers[HttpHeaders.ContentType] ?: "", "text/css")
+        assertContains(css.bodyAsText(), "--m3e-theme-primary")
+
+        val js = client.get("/static/home.js")
+        assertEquals(HttpStatusCode.OK, js.status)
+        assertContains(js.headers[HttpHeaders.ContentType] ?: "", "javascript")
+        assertContains(js.bodyAsText(), "toGoUrl")
+    }
+
+    @Test
     fun `service worker and manifest are served`() = testApplication {
         configure()
 

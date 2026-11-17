@@ -1,6 +1,7 @@
 
 plugins {
     alias(libs.plugins.kotlin.jvm)
+    alias(libs.plugins.kotlin.serialization)
     alias(ktorLibs.plugins.ktor)
 }
 
@@ -18,6 +19,7 @@ dependencies {
     implementation(ktorLibs.server.config.yaml)
     implementation(ktorLibs.server.core)
     implementation(ktorLibs.server.netty)
+    implementation(libs.ktor.server.html.builder)
     implementation(libs.logback.classic)
     implementation(libs.akuleshov7.ktoml.core)
 

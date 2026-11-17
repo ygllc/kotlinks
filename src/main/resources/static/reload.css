@@ -1,0 +1,130 @@
+/*
+ * Copyright (C) 2026 YG LLC
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://gnu.org>.
+ */
+
+body {
+  font-family: 'Google Sans Text', 'Google Sans', system-ui, -apple-system, sans-serif;
+  background: linear-gradient(135deg,
+    var(--m3e-theme-surface) 0%,
+    var(--m3e-theme-surface-variant) 50%,
+    var(--m3e-theme-primary-container) 100%);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  color: var(--m3e-theme-on-surface);
+}
+
+.container {
+  width: 100%;
+  max-width: 640px;
+  text-align: center;
+}
+
+.hero {
+  margin-bottom: 32px;
+  animation: bounce 1s ease-in-out infinite;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-15px) scale(1.05); }
+}
+
+.success-icon {
+  font-size: clamp(64px, 18vw, 120px);
+  line-height: 1;
+}
+
+.success-title {
+  font-size: 28px;
+  font-weight: 500;
+  color: var(--m3e-theme-on-surface);
+  margin-bottom: 8px;
+}
+
+.success-message {
+  font-size: 16px;
+  color: var(--m3e-theme-on-surface-variant);
+  margin-bottom: 24px;
+}
+
+.shortcuts-section {
+  background: var(--m3e-theme-surface);
+  border-radius: 16px;
+  padding: 20px;
+  margin-bottom: 24px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.shortcuts-title {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--m3e-theme-on-surface-variant);
+  margin-bottom: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.shortcuts-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+}
+
+.shortcut-chip {
+  font-family: 'Google Sans', monospace;
+  font-size: 13px;
+  color: var(--m3e-theme-primary);
+  background: var(--m3e-theme-primary-container);
+  padding: 6px 12px;
+  border-radius: 16px;
+  text-decoration: none;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.shortcut-chip:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.count-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 24px;
+  height: 24px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--m3e-theme-on-primary);
+  background: var(--m3e-theme-primary);
+  border-radius: 12px;
+  margin-left: 8px;
+}
+
+.footer {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+m3e-button {
+  --m3e-button-container-shape: 20px;
+}

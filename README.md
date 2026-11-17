@@ -17,7 +17,7 @@ The server also ships a themed search page (Material 3 Expressive via [`@m3e/web
 - **Case-insensitive, multi-segment paths** — `/MyMileage/GitHub` and `/mymileage/github` are the same shortcut.
 - **Automatic `https://`** — links without a scheme are normalized.
 - **Live reload** — `GET /reload` re-reads the TOML file and renders the updated shortcut list.
-- **Server-rendered pages** — home and 404 pages are templates with exact `{{PLACEHOLDER}}` substitution.
+- **Kotlin-rendered pages** — home, reload, 404, and auth pages are built with the kotlinx.html DSL, with CSS/JS served as static resources.
 - **Search/autocomplete** — case-insensitive substring filtering with keyboard navigation.
 - **Web-app assets** — a `manifest.json` and `sw.js` are served at stable URLs.
 
@@ -115,6 +115,7 @@ SHORTCUTS_FILE=/etc/kotlinks/shortcuts.toml java -jar build/libs/kotlinks-all.ja
 |---|---|---|
 | `GET` | `/` | Home page with search, categories, and shortcut count. |
 | `GET` | `/reload` | Re-reads `shortcuts.toml`, then renders the reload page. Returns `500` on parse errors. |
+| `GET` | `/static/{path...}` | Stylesheets and scripts under `src/main/resources/static`. |
 | `GET` | `/sw.js` | Service worker (`text/javascript`). |
 | `GET` | `/manifest.json` | Web app manifest (`application/manifest+json`). |
 | `GET` | `/{path...}` | Looks up the shortcut. Found → `302` to its URL. Missing → 404 page with `404` status. |
@@ -158,14 +159,29 @@ java -jar build/libs/kotlinks-all.jar
 ```
 src/
 ├─ main/
-│  ├─ kotlin/
-│  │  └─ Application.kt          # TOML model, loader/store, rendering, routes
+│  ├─ kotlin/com/yg/
+│  │  ├─ Application.kt          # TOML model, loader/store, routes
+│  │  └─ pages/
+│  │     ├─ Layout.kt            # Shared <head>, theme, and m3e-* helpers
+│  │     ├─ Html.kt              # HTML/JSON escaping
+│  │     ├─ ShortcutsHtml.kt     # Chips, categories, options, JSON
+│  │     ├─ HomePage.kt          # Home page (kotlinx.html DSL)
+│  │     ├─ NotFoundPage.kt      # Not-found page
+│  │     ├─ ReloadPage.kt        # Reload success page
+│  │     └─ AuthPage.kt          # Reserved password page (not wired up yet)
 │  └─ resources/
 │     ├─ application.yaml        # Ktor host/port and module entry point
-│     ├─ home.html               # Home page template
-│     ├─ 404.html                # Not-found page template
-│     ├─ reload.html             # Reload success page template
-│     ├─ auth.html               # Reserved password page (not wired up yet)
+│     ├─ static/
+│     │  ├─ theme.css            # Shared reset + theme tokens
+│     │  ├─ home.css             # Home page styles
+│     │  ├─ not-found.css        # Not-found page styles
+│     │  ├─ reload.css           # Reload page styles
+│     │  ├─ auth.css             # Password page styles
+│     │  ├─ app.js               # Service-worker registration
+│     │  ├─ home.js              # Home search/navigation
+│     │  ├─ not-found.js         # Not-found search/navigation
+│     │  ├─ reload.js            # Reload page buttons
+│     │  └─ auth.js              # Password form behaviour
 │     ├─ shortcuts.toml          # Bundled sample shortcuts
 │     ├─ manifest.json           # PWA manifest
 │     ├─ sw.js                   # Service worker
@@ -179,8 +195,9 @@ src/
 
 1. At startup `ShortcutStore` reads and parses `shortcuts.toml` with [ktoml](https://github.com/akuleshov7/ktoml).
 2. `buildShortcuts()` builds an in-memory `Map<shortcut, url>`: section links first, then aliases resolved through `key → url`.
-3. Requests to `/{path...}` look up the normalized path and issue a `302` redirect, or render `404.html` with the requested path, the shortcut list, and searchable options.
+3. Requests to `/{path...}` look up the normalized path and issue a `302` redirect, or render the not-found page with the requested path, the shortcut list, and searchable options.
 4. `/reload` swaps the in-memory map atomically (the store is `@Volatile`) so traffic keeps being served during a reload.
+5. Pages are rendered with the kotlinx.html DSL in `com.yg.pages`; their CSS/JS live under `src/main/resources/static` and are served via `/static`.
 
 ## Testing
 
@@ -195,6 +212,7 @@ src/
 - alias redirects
 - unknown paths returning the 404 page with a 404 status
 - reload page rendering
+- static stylesheets/scripts served from `/static`
 - correct content types for `sw.js` and `manifest.json`
 
 ## Related project: golinks (Bun)

@@ -1,0 +1,51 @@
+/*
+ * Copyright (C) 2026 YG LLC
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://gnu.org>.
+ */
+
+/* Shared reset and Material 3 theme tokens for every page. */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --m3e-theme-primary: #6750A4;
+  --m3e-theme-on-primary: #FFFFFF;
+  --m3e-theme-primary-container: #EADDFF;
+  --m3e-theme-on-primary-container: #21005D;
+  --m3e-theme-surface: #FEF7FF;
+  --m3e-theme-on-surface: #1D1B20;
+  --m3e-theme-surface-variant: #E7E0EC;
+  --m3e-theme-on-surface-variant: #49454F;
+  --m3e-theme-outline: #79747E;
+  --m3e-theme-error: #BA1A1A;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --m3e-theme-primary: #D0BCFF;
+    --m3e-theme-on-primary: #381E72;
+    --m3e-theme-primary-container: #4F378B;
+    --m3e-theme-on-primary-container: #EADDFF;
+    --m3e-theme-surface: #141218;
+    --m3e-theme-on-surface: #E6E0E9;
+    --m3e-theme-surface-variant: #49454F;
+    --m3e-theme-on-surface-variant: #CAC4D0;
+    --m3e-theme-outline: #938F99;
+    --m3e-theme-error: #FFB4AB;
+  }
+}

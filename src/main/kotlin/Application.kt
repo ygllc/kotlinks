@@ -20,12 +20,15 @@
 package com.yg
 
 import com.akuleshov7.ktoml.Toml
+import com.yg.pages.respondHome
+import com.yg.pages.respondNotFound
+import com.yg.pages.respondReload
 import io.ktor.http.ContentType
 import io.ktor.http.HttpStatusCode
-import io.ktor.http.encodeURLPathPart
 import io.ktor.server.application.Application
 import io.ktor.server.application.ApplicationCall
 import io.ktor.server.application.log
+import io.ktor.server.http.content.staticResources
 import io.ktor.server.request.path
 import io.ktor.server.response.respondRedirect
 import io.ktor.server.response.respondText
@@ -136,14 +139,14 @@ private object ShortcutStore {
                 sections.getOrPut(section) { mutableListOf() }
                     .add(ShortcutChip(shortcut, url))
 
-                entry.key?.let { keyToUrl[it] = url }
+                entry.key?.let { keyToUrl[unquoteKey(it)] = url }
             }
         }
 
         val aliases = mutableListOf<ShortcutChip>()
         file.keys.forEach { (_, entries) ->
             entries.forEach aliasLoop@ { (internalKey, alias) ->
-                val url = keyToUrl[internalKey] ?: return@aliasLoop
+                val url = keyToUrl[unquoteKey(internalKey)] ?: return@aliasLoop
                 val shortcut = alias.lowercase()
 
                 links[shortcut] = url
@@ -156,6 +159,15 @@ private object ShortcutStore {
 
         return ShortcutSet(links = links, sections = sections)
     }
+
+    /**
+     * ktoml 0.7.1 keeps the surrounding quotes on quoted keys inside nested
+     * `Map<String, String>` tables, so `"key.foo" = "bar"` decodes the key as
+     * `"key.foo"` (quotes included). Strip them before matching against the
+     * unquoted `key` values stored on links.
+     */
+    private fun unquoteKey(raw: String): String =
+        raw.trim().removeSurrounding("\"").removeSurrounding("'")
 
     private fun normalizeUrl(raw: String): String {
         val trimmed = raw.trim()
@@ -176,8 +188,11 @@ fun Application.module() {
     ShortcutStore.current()
 
     routing {
+        // CSS/JS live under src/main/resources/static and are served unchanged.
+        staticResources("/static", "static")
+
         get("/") {
-            call.respondText(renderHome(ShortcutStore.current()), ContentType.Text.Html)
+            call.respondHome(ShortcutStore.current())
         }
 
         get("/reload") {
@@ -200,7 +215,7 @@ fun Application.module() {
             val path = call.request.path().trim('/').lowercase()
 
             if (path.isEmpty()) {
-                call.respondText(renderHome(ShortcutStore.current()), ContentType.Text.Html)
+                call.respondHome(ShortcutStore.current())
                 return@get
             }
 
@@ -216,19 +231,11 @@ fun Application.module() {
                 call.application.log.info("Redirect: go/{} -> {}", path, target)
                 call.respondRedirect(target, permanent = false)
             } else {
-                call.respondText(
-                    renderNotFound(path, shortcuts),
-                    ContentType.Text.Html,
-                    HttpStatusCode.NotFound,
-                )
+                call.respondNotFound(path, shortcuts)
             }
         }
     }
 }
-
-// --------------------------------------------------------------------------- //
-//           Page rendering (exact `{{PLACEHOLDER}}` replacement) 
-// --------------------------------------------------------------------------- //
 
 private suspend fun ApplicationCall.respondReloadPage() {
     val shortcuts = try {
@@ -242,62 +249,8 @@ private suspend fun ApplicationCall.respondReloadPage() {
         )
         return
     }
-    respondText(renderReload(shortcuts), ContentType.Text.Html)
+    respondReload(shortcuts)
 }
-
-private fun renderHome(shortcuts: ShortcutSet): String =
-    loadResource("home.html")
-        .replace("{{COUNT}}", shortcuts.count.toString())
-        .replace("{{OPTIONS_HTML}}", buildOptions(shortcuts.links.keys))
-        .replace("{{CATEGORIES_HTML}}", buildCategories(shortcuts.sections))
-        .replace("{{SHORTCUTS_JSON}}", buildShortcutsJson(shortcuts.links))
-
-private fun renderReload(shortcuts: ShortcutSet): String {
-    val chips = shortcuts.links.keys.sorted().joinToString("") { buildChip(it) }
-    return loadResource("reload.html")
-        .replace("{{COUNT}}", shortcuts.count.toString())
-        .replace("{{SHORTCUTS_CHIPS}}", chips)
-}
-
-private fun renderNotFound(path: String, shortcuts: ShortcutSet): String =
-    loadResource("404.html")
-        // JS string literal first, then the remaining HTML text occurrence.
-        .replace("\"{{REQUESTED_PATH}}\"", "\"${escapeJs(path)}\"")
-        .replace("{{REQUESTED_PATH}}", escapeHtml(path))
-        .replace("{{OPTIONS_HTML}}", buildOptions(shortcuts.links.keys))
-        .replace("{{CATEGORIES_HTML}}", buildCategories(shortcuts.sections))
-        .replace("{{SHORTCUTS_JSON}}", buildShortcutsJson(shortcuts.links))
-
-private fun buildOptions(shortcuts: Collection<String>): String =
-    shortcuts.sorted().joinToString("") { shortcut ->
-        val href = shortcutHref(shortcut)
-        """<m3e-option value="${escapeHtml(href)}">go/${escapeHtml(shortcut)}</m3e-option>"""
-    }
-
-private fun buildCategories(sections: Map<String, List<ShortcutChip>>): String =
-    sections.entries
-        .filter { it.value.isNotEmpty() }
-        .joinToString("") { (name, chips) ->
-            buildString {
-                append("<div class=\"category-section\">")
-                append("<div class=\"category-title\">").append(escapeHtml(name)).append("</div>")
-                append("<div class=\"shortcuts-grid\">")
-                chips.forEach { append(buildChip(it.shortcut)) }
-                append("</div>")
-                append("</div>")
-            }
-        }
-
-private fun buildChip(shortcut: String): String =
-    """<a href="${escapeHtml(shortcutHref(shortcut))}" class="shortcut-chip">go/${escapeHtml(shortcut)}</a>"""
-
-private fun shortcutHref(shortcut: String): String =
-    "/" + shortcut.split('/').joinToString("/") { it.encodeURLPathPart() }
-
-private fun buildShortcutsJson(links: Map<String, String>): String =
-    links.entries.joinToString(prefix = "[", postfix = "]") { (shortcut, url) ->
-        """{"shortcut":${jsonString(shortcut)},"url":${jsonString(url)}}"""
-    }
 
 private fun loadResource(name: String): String =
     ShortcutStore::class.java.classLoader
@@ -305,56 +258,3 @@ private fun loadResource(name: String): String =
         ?.bufferedReader(Charsets.UTF_8)
         ?.use { it.readText() }
         ?: error("Static resource not found on classpath: $name")
-
-// --------------------------------------------------------------------------- //
-// Small escaping helpers
-// --------------------------------------------------------------------------- //
-
-private fun escapeHtml(value: String): String = buildString(value.length) {
-    value.forEach { c ->
-        when (c) {
-            '&' -> append("&amp;")
-            '<' -> append("&lt;")
-            '>' -> append("&gt;")
-            '"' -> append("&quot;")
-            '\'' -> append("&#39;")
-            else -> append(c)
-        }
-    }
-}
-
-private fun escapeJs(value: String): String = buildString(value.length) {
-    value.forEach { c ->
-        when (c) {
-            '\\' -> append("\\\\")
-            '"' -> append("\\\"")
-            '\'' -> append("\\'")
-            '\n' -> append("\\n")
-            '\r' -> append("\\r")
-            '\t' -> append("\\t")
-            '<' -> append("\\u003c")
-            '>' -> append("\\u003e")
-            '&' -> append("\\u0026")
-            else -> append(c)
-        }
-    }
-}
-
-private fun jsonString(value: String): String = buildString(value.length + 2) {
-    append('"')
-    value.forEach { c ->
-        when (c) {
-            '"' -> append("\\\"")
-            '\\' -> append("\\\\")
-            '\n' -> append("\\n")
-            '\r' -> append("\\r")
-            '\t' -> append("\\t")
-            else -> if (c < ' ') {
-                append("\\u%04x".format(c.code))
-            } else {
-                append(c)
-            }
-        }
-    }
-    append('"')
-}

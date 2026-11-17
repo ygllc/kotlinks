@@ -3,4 +3,4 @@ ktor:
     port: 80
   application:
     modules:
-      - com.yg.RoutingKt.configureRouting
+      - com.yg.ApplicationKt.module

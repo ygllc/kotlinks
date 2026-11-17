@@ -15,10 +15,9 @@
  *   along with this program.  If not, see <https://gnu.org>.
  */
 
-const CACHE_NAME = 'kotlinks-v1';
+const CACHE_NAME = 'kotlinks-v2';
 const urlsToCache = [
   '/',
-  '/home.html',
   '/manifest.json',
 ];
 

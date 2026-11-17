@@ -1,0 +1,132 @@
+/*
+ * Copyright (C) 2026 YG LLC
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://gnu.org>.
+ */
+
+body {
+  font-family: 'Google Sans Text', 'Google Sans', system-ui, -apple-system, sans-serif;
+  background: linear-gradient(135deg,
+    var(--m3e-theme-surface) 0%,
+    var(--m3e-theme-surface-variant) 50%,
+    var(--m3e-theme-primary-container) 100%);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  color: var(--m3e-theme-on-surface);
+}
+
+.container {
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+}
+
+.icon {
+  font-size: clamp(48px, 12vw, 72px);
+  margin-bottom: 16px;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+.description {
+  font-size: 14px;
+  color: var(--m3e-theme-on-surface-variant);
+  margin-bottom: 24px;
+}
+
+.shortcut-path {
+  font-family: 'Google Sans', monospace;
+  font-size: 16px;
+  color: var(--m3e-theme-primary);
+  background: var(--m3e-theme-primary-container);
+  padding: 8px 16px;
+  border-radius: 20px;
+  display: inline-block;
+  margin-bottom: 24px;
+}
+
+m3e-card {
+  width: 100%;
+  --m3e-card-container-shape: 16px;
+}
+
+.input-wrapper {
+  position: relative;
+  margin-bottom: 16px;
+}
+
+.input-wrapper input {
+  width: 100%;
+  padding: 16px;
+  font-size: 16px;
+  font-family: inherit;
+  border: 1px solid var(--m3e-theme-outline);
+  border-radius: 4px;
+  background: var(--m3e-theme-surface);
+  color: var(--m3e-theme-on-surface);
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.input-wrapper input:focus {
+  border-color: var(--m3e-theme-primary);
+  box-shadow: 0 0 0 2px var(--m3e-theme-primary-container);
+}
+
+.input-wrapper label {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 16px;
+  color: var(--m3e-theme-on-surface-variant);
+  pointer-events: none;
+  transition: 0.2s;
+  background: var(--m3e-theme-surface);
+  padding: 0 4px;
+}
+
+.input-wrapper input:focus + label,
+.input-wrapper input:not(:placeholder-shown) + label {
+  top: 0;
+  font-size: 12px;
+  color: var(--m3e-theme-primary);
+}
+
+m3e-button {
+  width: 100%;
+  --m3e-button-container-shape: 20px;
+}
+
+.error-message {
+  color: var(--m3e-theme-error);
+  font-size: 14px;
+  margin-bottom: 16px;
+}
+
+.footer {
+  margin-top: 24px;
+}
+
+m3e-button[variant="text"] {
+  --m3e-button-container-shape: 20px;
+}

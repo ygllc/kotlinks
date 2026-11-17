@@ -15,11 +15,20 @@
  *   along with this program.  If not, see <https://gnu.org>.
  */
 
-const CACHE_NAME = 'kotlinks-v1';
+const CACHE_NAME = 'kotlinks-v3';
 const urlsToCache = [
   '/',
-  '/home.html',
   '/manifest.json',
+  '/static/theme.css',
+  '/static/home.css',
+  '/static/not-found.css',
+  '/static/reload.css',
+  '/static/auth.css',
+  '/static/app.js',
+  '/static/home.js',
+  '/static/not-found.js',
+  '/static/reload.js',
+  '/static/auth.js',
 ];
 
 self.addEventListener('install', (event) => {

@@ -1,0 +1,69 @@
+/*
+ * Copyright (C) 2026 YG LLC
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://gnu.org>.
+ */
+
+body {
+  font-family: 'Google Sans Text', 'Google Sans', system-ui, -apple-system, sans-serif;
+  background: linear-gradient(135deg, var(--m3e-theme-surface) 0%, var(--m3e-theme-surface-variant) 50%, var(--m3e-theme-primary-container) 100%);
+  min-height: 100vh;
+  padding: 24px;
+  color: var(--m3e-theme-on-surface);
+}
+
+.container { width:100%; max-width:800px; margin:0 auto; }
+.header { text-align:center; margin-bottom:32px; }
+.logo { font-size: clamp(48px, 12vw, 72px); font-weight:400; margin-bottom:8px; }
+.title { font-size:28px; font-weight:500; color:var(--m3e-theme-on-surface); margin-bottom:4px; }
+.subtitle { font-size:14px; color:var(--m3e-theme-on-surface-variant); }
+.search-section { margin-bottom:32px; }
+.search-container { width:100%; max-width:560px; margin:0 auto; padding:8px; }
+.input-wrapper { position:relative; margin-bottom:8px; }
+.input-wrapper input {
+  width:100%; padding:16px; font-size:16px; font-family:inherit;
+  border:1px solid var(--m3e-theme-outline); border-radius:4px; background:var(--m3e-theme-surface);
+  color:var(--m3e-theme-on-surface); outline:none; transition: border-color 0.2s, box-shadow 0.2s;
+}
+.input-wrapper input:focus { border-color:var(--m3e-theme-primary); box-shadow:0 0 0 2px var(--m3e-theme-primary-container); }
+.input-wrapper label {
+  position:absolute; left:12px; top:50%; transform:translateY(-50%); font-size:16px; color:var(--m3e-theme-on-surface-variant);
+  pointer-events:none; transition:0.2s; background:var(--m3e-theme-surface); padding:0 4px;
+}
+.input-wrapper input:focus + label,
+.input-wrapper input:not(:placeholder-shown) + label {
+  top:0; font-size:12px; color:var(--m3e-theme-primary);
+}
+m3e-card { width:100%; --m3e-card-container-shape:16px; }
+m3e-autocomplete { width:100%; --m3e-autocomplete-container-shape:28px; }
+.shortcuts-container { display:flex; flex-direction:column; gap:24px; }
+.category-section { background:var(--m3e-theme-surface); border-radius:16px; padding:20px; box-shadow:0 2px 8px rgba(0,0,0,0.08); }
+.category-title { font-size:14px; font-weight:500; color:var(--m3e-theme-on-surface-variant); margin-bottom:16px; text-transform:uppercase; letter-spacing:0.5px; }
+.shortcuts-grid { display:flex; flex-wrap:wrap; gap:8px; }
+.shortcut-chip { font-family:'Google Sans', monospace; font-size:14px; color:var(--m3e-theme-primary); background:var(--m3e-theme-primary-container); padding:8px 14px; border-radius:20px; text-decoration:none; transition: transform 0.2s, box-shadow 0.2s; display:inline-flex; align-items:center; gap:6px; }
+.shortcut-chip:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+.shortcut-chip[data-password="true"]::after { content: "🔒"; font-size:12px; }
+.click-count { font-size:11px; color:var(--m3e-theme-on-surface-variant); background:var(--m3e-theme-surface-variant); padding:2px 6px; border-radius:10px; margin-left:8px; }
+.results-container { max-height:320px; overflow-y:auto; scrollbar-width:thin; scrollbar-color:var(--m3e-theme-outline) transparent; }
+.result-item { display:flex; align-items:center; padding:12px 16px; text-decoration:none; color:inherit; transition:background 0.2s; }
+.result-item:hover { background:var(--m3e-theme-surface-variant); }
+.result-icon { width:40px; height:40px; border-radius:20px; background:var(--m3e-theme-primary-container); color:var(--m3e-theme-on-primary-container); display:flex; align-items:center; justify-content:center; margin-right:16px; flex-shrink:0; }
+.result-content { flex:1; text-align:left; min-width:0; }
+.result-shortcut { font-size:16px; font-weight:500; color:var(--m3e-theme-on-surface); font-family:'Google Sans', monospace; }
+.result-url { font-size:13px; color:var(--m3e-theme-on-surface-variant); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.no-results { color:var(--m3e-theme-error); font-size:14px; padding:24px; text-align:center; }
+.footer { margin-top:32px; text-align:center; }
+m3e-button { --m3e-button-container-shape:20px; }
+.toast { position:fixed; bottom:24px; left:50%; transform:translateX(-50%) translateY(100px); background:var(--m3e-theme-on-surface); color:var(--m3e-theme-surface); padding:12px 24px; border-radius:24px; font-size:14px; opacity:0; transition:transform 0.3s, opacity 0.3s; z-index:1000; }
+.toast.show { transform:translateX(-50%) translateY(0); opacity:1; }

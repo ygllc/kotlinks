@@ -1,33 +1,3 @@
-rem^ ||(
-    This is the default license template.
-    
-    File: gradlew.bat
-    Author: umesh
-    Copyright (c) 2026 umesh
-    
-    To edit this license information: Press Ctrl+Shift+P and press 'Create new License Template...'.
-)
-
-2026 umesh
-    
-    To edit this license information: Press Ctrl+Shift+P and press 'Create new License Template...'.
-)
-
-2026 umesh
-    
-    To edit this license information: Press Ctrl+Shift+P and press 'Create new License Template...'.
-)
-
-2026 umesh
-    
-    To edit this license information: Press Ctrl+Shift+P and press 'Create new License Template...'.
-)
-
-2026 umesh
-    
-    To edit this license information: Press Ctrl+Shift+P and press 'Create new License Template...'.
-)
-
 @rem
 @rem Copyright 2015 the original author or authors.
 @rem

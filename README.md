@@ -133,7 +133,7 @@ ktor:
     port: 80
   application:
     modules:
-      - com.yg.ApplicationKt.module
+      - com.yg.kotlinks.ApplicationKt.module
 ```
 
 Change `host` to `0.0.0.0` to expose the server on your network, or change `port` if you cannot bind to 80.
@@ -159,7 +159,7 @@ java -jar build/libs/kotlinks-all.jar
 ```
 src/
 ├─ main/
-│  ├─ kotlin/com/yg/
+│  ├─ kotlin/com/yg/kotlinks/
 │  │  ├─ Application.kt          # TOML model, loader/store, routes
 │  │  └─ pages/
 │  │     ├─ Layout.kt            # Shared <head>, theme, and m3e-* helpers
@@ -197,7 +197,7 @@ src/
 2. `buildShortcuts()` builds an in-memory `Map<shortcut, url>`: section links first, then aliases resolved through `key → url`.
 3. Requests to `/{path...}` look up the normalized path and issue a `302` redirect, or render the not-found page with the requested path, the shortcut list, and searchable options.
 4. `/reload` swaps the in-memory map atomically (the store is `@Volatile`) so traffic keeps being served during a reload.
-5. Pages are rendered with the kotlinx.html DSL in `com.yg.pages`; their CSS/JS live under `src/main/resources/static` and are served via `/static`.
+5. Pages are rendered with the kotlinx.html DSL in `com.yg.kotlinks.pages`; their CSS/JS live under `src/main/resources/static` and are served via `/static`.
 
 ## Testing
 

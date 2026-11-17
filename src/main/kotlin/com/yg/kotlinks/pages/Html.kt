@@ -41,6 +41,13 @@ internal fun jsonString(value: String): String = buildString(value.length + 2) {
             '\n' -> append("\\n")
             '\r' -> append("\\r")
             '\t' -> append("\\t")
+            // Keep JSON embedded in <script> from closing the element or
+            // changing how the browser parses the surrounding HTML.
+            '<' -> append("\\u003c")
+            '>' -> append("\\u003e")
+            '&' -> append("\\u0026")
+            '\u2028' -> append("\\u2028")
+            '\u2029' -> append("\\u2029")
             else -> if (c < ' ') {
                 append("\\u%04x".format(c.code))
             } else {

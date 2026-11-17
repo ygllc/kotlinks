@@ -41,7 +41,9 @@ class ServerTest {
         assertEquals(HttpStatusCode.OK, response.status)
         assertContains(body, "Kotlinks")
         assertContains(body, "mymileage/github")
-        assertFalse(body.contains("{{"), "Unresolved template placeholder left in home page")
+        assertContains(body, "/static/theme.css")
+        assertContains(body, "/static/home.css")
+        assertContains(body, "/static/home.js")
     }
 
     @Test
@@ -81,7 +83,21 @@ class ServerTest {
 
         assertEquals(HttpStatusCode.NotFound, response.status)
         assertContains(body, "does-not-exist")
-        assertFalse(body.contains("{{"), "Unresolved template placeholder left in 404 page")
+        assertContains(body, "/static/not-found.css")
+        assertContains(body, "/static/not-found.js")
+        assertFalse(body.contains("<script>alert(1)</script>"))
+    }
+
+    @Test
+    fun `unknown path is escaped in the 404 page`() = testApplication {
+        configure()
+
+        val response = client.get("/%3Cscript%3Ealert%281%29%3C%2Fscript%3E")
+        val body = response.bodyAsText()
+
+        assertEquals(HttpStatusCode.NotFound, response.status)
+        assertContains(body, "go/%3cscript%3ealert%281%29%3c%2fscript%3e")
+        assertFalse(body.contains("<script>alert(1)</script>"))
     }
 
     @Test
@@ -94,7 +110,8 @@ class ServerTest {
         assertEquals(HttpStatusCode.OK, response.status)
         assertContains(body, "Shortcuts Reloaded")
         assertContains(body, "mymileage/github")
-        assertFalse(body.contains("{{"), "Unresolved template placeholder left in reload page")
+        assertContains(body, "/static/reload.css")
+        assertContains(body, "/static/reload.js")
     }
 
     @Test
@@ -120,6 +137,8 @@ class ServerTest {
         assertEquals(HttpStatusCode.OK, sw.status)
         assertContains(sw.headers[HttpHeaders.ContentType] ?: "", "javascript")
         assertContains(sw.bodyAsText(), "CACHE_NAME")
+        assertContains(sw.bodyAsText(), "/static/theme.css")
+        assertContains(sw.bodyAsText(), "/static/home.js")
 
         val manifest = client.get("/manifest.json")
         assertEquals(HttpStatusCode.OK, manifest.status)

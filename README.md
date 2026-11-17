@@ -24,7 +24,7 @@ The server also ships a themed search page (Material 3 Expressive via [`@m3e/web
 ## Requirements
 
 - **JDK 21** (the Gradle toolchain resolves it automatically via the Foojay resolver).
-- The bundled Gradle wrapper (Gradle 9.8.2). No separate Gradle install is needed.
+- The bundled Gradle wrapper (Gradle 9.9.1). No separate Gradle install is needed.
 
 ## Quick start
 
@@ -94,16 +94,14 @@ This produces four shortcuts:
 
 The first match wins:
 
-1. JVM property: `-Dkotlinks.shortcuts=/path/to/shortcuts.toml`
+1. JVM property: `-Dgolinks.shortcuts=/path/to/shortcuts.toml`
 2. Environment variable: `SHORTCUTS_FILE=/path/to/shortcuts.toml`
 3. `shortcuts.toml` in the working directory
 4. `shortcuts.toml` bundled on the classpath (`src/main/resources`)
 
-The legacy property `-Dgolinks.shortcuts` is still accepted as a fallback.
-
 ```bash
 # JVM property (pass it to the application JVM, not to Gradle)
-java -Dkotlinks.shortcuts=/etc/kotlinks/shortcuts.toml -jar build/libs/kotlinks-all.jar
+java -Dgolinks.shortcuts=/etc/kotlinks/shortcuts.toml -jar build/libs/kotlinks-all.jar
 
 # Environment variable
 SHORTCUTS_FILE=/etc/kotlinks/shortcuts.toml java -jar build/libs/kotlinks-all.jar
@@ -187,8 +185,9 @@ src/
 │     ├─ sw.js                   # Service worker
 │     └─ logback.xml             # Logging configuration
 └─ test/
-   └─ kotlin/
-      └─ ServerTest.kt           # Endpoint tests
+   └─ kotlin/com/yg/kotlinks/
+      ├─ ServerTest.kt           # Endpoint tests
+      └─ pages/HtmlTest.kt       # Escaping tests
 ```
 
 ## How it works

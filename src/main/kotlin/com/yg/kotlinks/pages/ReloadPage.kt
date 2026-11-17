@@ -15,9 +15,9 @@
  * along with this program.  If not, see <https://gnu.org>.
  */
 
-package com.yg.pages
+package com.yg.kotlinks.pages
 
-import com.yg.ShortcutSet
+import com.yg.kotlinks.ShortcutSet
 import io.ktor.server.application.ApplicationCall
 import kotlinx.html.*
 

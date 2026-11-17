@@ -17,12 +17,12 @@
  *  
  */
 
-package com.yg
+package com.yg.kotlinks
 
 import com.akuleshov7.ktoml.Toml
-import com.yg.pages.respondHome
-import com.yg.pages.respondNotFound
-import com.yg.pages.respondReload
+import com.yg.kotlinks.pages.respondHome
+import com.yg.kotlinks.pages.respondNotFound
+import com.yg.kotlinks.pages.respondReload
 import io.ktor.http.ContentType
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.Application

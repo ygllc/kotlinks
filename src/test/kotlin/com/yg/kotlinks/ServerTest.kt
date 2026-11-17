@@ -17,7 +17,7 @@
  *  
  */
 
-package com.yg
+package com.yg.kotlinks
 
 import io.ktor.client.request.get
 import io.ktor.client.statement.bodyAsText

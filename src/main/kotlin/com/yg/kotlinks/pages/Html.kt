@@ -15,7 +15,7 @@
  * along with this program.  If not, see <https://gnu.org>.
  */
 
-package com.yg.pages
+package com.yg.kotlinks.pages
 
 /** Escapes a value for use in HTML text and quoted attribute values. */
 internal fun escapeHtml(value: String): String = buildString(value.length) {

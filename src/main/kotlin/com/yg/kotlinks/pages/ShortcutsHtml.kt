@@ -15,9 +15,9 @@
  * along with this program.  If not, see <https://gnu.org>.
  */
 
-package com.yg.pages
+package com.yg.kotlinks.pages
 
-import com.yg.ShortcutChip
+import com.yg.kotlinks.ShortcutChip
 import io.ktor.http.encodeURLPathPart
 import kotlinx.html.FlowContent
 import kotlinx.html.a

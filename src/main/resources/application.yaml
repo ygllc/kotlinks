@@ -3,4 +3,4 @@ ktor:
     port: 80
   application:
     modules:
-      - com.yg.kotlinks.ApplicationKt.module
+      - com.yg.kotlinks.MainKt.module

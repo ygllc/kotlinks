@@ -133,7 +133,7 @@ ktor:
     port: 80
   application:
     modules:
-      - com.yg.kotlinks.ApplicationKt.module
+      - com.yg.kotlinks.MainKt.module
 ```
 
 Change `host` to `0.0.0.0` to expose the server on your network, or change `port` if you cannot bind to 80.
@@ -160,7 +160,7 @@ java -jar build/libs/kotlinks-all.jar
 src/
 ├─ main/
 │  ├─ kotlin/com/yg/kotlinks/
-│  │  ├─ Application.kt          # TOML model, loader/store, routes
+│  │  ├─ Main.kt                  # TOML model, loader/store, routes
 │  │  └─ pages/
 │  │     ├─ Layout.kt            # Shared <head>, theme, and m3e-* helpers
 │  │     ├─ Html.kt              # HTML/JSON escaping
